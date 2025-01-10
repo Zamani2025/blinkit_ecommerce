@@ -66,7 +66,7 @@ const userSchema = new mongoose.Schema(
     },
     forgot_password_token_expiry: {
       type: Date,
-      default: Date.now(),
+      default: null,
     },
   },
   {

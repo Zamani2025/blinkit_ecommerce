@@ -5,6 +5,7 @@ import morgan from "morgan";
 import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/connectDB.js";
+import userRoute from "./routes/user.routes.js";
 
 dotenv.config();
 
@@ -29,7 +30,8 @@ app.get("/", (req, res) => {
   res.status(200).json({
     message: "Welcome to the backend",
   });
-})
+});
+app.use("/api/user", userRoute);
 
 const PORT = process.env.PORT || 5000;
 
