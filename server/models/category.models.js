@@ -9,6 +9,8 @@ const categorySchema = new mongoose.Schema({
         type: String,
         required: [true, "Please add an image"],
     },
+}, {
+    timestamps: true
 });
 
 const CategoryModel = mongoose.model("Category", categorySchema);
