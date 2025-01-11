@@ -7,6 +7,7 @@ import generateAccessToken from "../utils/generateAccessToken.js";
 import generateRefreshToken from "../utils/generateRefreshToken.js";
 import generateForgotPasswordOtp from "../utils/generateForgotPasswordOtp.js";
 import forgotPasswordOtpTemplate from "../utils/forgotPasswordOtpTemplate.js";
+import cloudinaryUpload from "../config/cloudinary.js";
 
 export const registerUserController = async (req, res) => {
   try {
@@ -205,6 +206,85 @@ export const loginUserController = async (req, res) => {
       error: false,
       data: { accessToken, refreshToken },
     });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || error,
+      success: false,
+      error: true,
+    });
+  }
+};
+
+export const logoutUserController = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const user = await UserModel.findOne({ _id: userId });
+
+    if (!user) {
+      return res.status(400).json({
+        message: "User with this email does not exist",
+        success: false,
+        error: true,
+      });
+    }
+    user.refresh_token = null;
+    await user.save();
+    res.clearCookie("refreshToken");
+    res.clearCookie("accessToken");
+    return res.status(200).json({
+      message: "User logged out successfully",
+      success: true,
+      error: false,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || error,
+      success: false,
+      error: true,
+    });
+  }
+};
+
+export const uploadUserAvatarController = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const image = req.file;
+
+    if (!image) {
+      return res.status(400).json({
+        message: "Image is required",
+        success: false,
+        error: true,
+      });
+    }
+
+    const user = await UserModel.findOne({ _id: userId });
+
+    if (!user) {
+      return res.status(400).json({
+        message: "User with this email does not exist",
+        success: false,
+        error: true,
+      });
+    }
+    const imageResponse = await cloudinaryUpload(image);
+
+    if (imageResponse) {
+      user.avatar = imageResponse.secure_url;
+      await user.save();
+      return res.status(200).json({
+        message: "Image uploaded successfully",
+        success: true,
+        error: false,
+        data: imageResponse.secure_url,
+      });
+    } else {
+      return res.status(400).json({
+        message: "Image upload failed",
+        success: false,
+        error: true,
+      });
+    }
   } catch (error) {
     return res.status(500).json({
       message: error.message || error,

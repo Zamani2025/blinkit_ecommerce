@@ -6,6 +6,7 @@ import helmet from "helmet";
 import cookieParser from "cookie-parser";
 import connectDB from "./config/connectDB.js";
 import userRoute from "./routes/user.routes.js";
+import { authMiddleware } from "./middleware/auth.js";
 
 dotenv.config();
 
@@ -26,7 +27,7 @@ app.use(
   })
 );
 
-app.get("/", (req, res) => {
+app.get("/", authMiddleware, (req, res) => {
   res.status(200).json({
     message: "Welcome to the backend",
   });
