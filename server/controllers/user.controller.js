@@ -294,6 +294,45 @@ export const uploadUserAvatarController = async (req, res) => {
   }
 };
 
+export const updatedUserController = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const { name, email, mobile } = req.body;
+
+    const user = await UserModel.findOne({ _id: userId });
+
+    if (!user) {
+      return res.status(400).json({
+        message: "User with this email does not exist",
+        success: false,
+        error: true,
+      });
+    }
+    if (name) {
+      user.name = name;
+    }
+    if (email) {
+      user.email = email;
+    }
+    if (mobile) {
+      user.mobile = mobile;
+    }
+    await user.save();
+    return res.status(200).json({
+      message: "User updated successfully",
+      success: true,
+      error: false,
+      data: user,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || error,
+      success: false,
+      error: true,
+    });
+  }
+};
+
 export const forgotPasswordController = async (req, res) => {
   try {
     const { email } = req.body;
@@ -447,6 +486,80 @@ export const resetPasswordController = async (req, res) => {
       success: true,
       error: false,
       data: updatedUser,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || error,
+      success: false,
+      error: true,
+    });
+  }
+};
+
+export const refreshTokenController = async (req, res) => {
+  try {
+    const token =
+      req.cookies.refreshToken || req.headers.authorization?.split(" ")[1];
+
+    if (!token) {
+      return res.status(400).json({
+        message: "Refresh token not found",
+        success: false,
+        error: true,
+      });
+    }
+
+    const decoded = jwt.verify(token, process.env.JWT_REFRESH_TOKEN_SECRET);
+
+    if (!decoded) {
+      return res.status(400).json({
+        message: "Invalid refresh token",
+        success: false,
+        error: true,
+      });
+    }
+
+    const user = await UserModel.findById(decoded.id);
+
+    if (!user) {
+      return res.status(400).json({
+        message: "User with this email does not exist",
+        success: false,
+        error: true,
+      });
+    }
+
+    const accessToken = generateAccessToken({
+      email: user.email,
+      name: user.name,
+      role: user.role,
+      id: user._id,
+    });
+
+    const refreshToken = generateRefreshToken({
+      email: user.email,
+      name: user.name,
+      role: user.role,
+      id: user._id,
+    });
+
+    res.cookie("accessToken", accessToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+
+    res.cookie("refreshToken", refreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+
+    return res.status(200).json({
+      message: "Token refreshed successfully",
+      success: true,
+      error: false,
+      data: { accessToken, refreshToken },
     });
   } catch (error) {
     return res.status(500).json({

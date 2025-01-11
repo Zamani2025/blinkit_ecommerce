@@ -3,8 +3,10 @@ import {
   forgotPasswordController,
   loginUserController,
   logoutUserController,
+  refreshTokenController,
   registerUserController,
   resetPasswordController,
+  updatedUserController,
   uploadUserAvatarController,
   verifyEmailController,
   verifyForgotPasswordOtpController,
@@ -31,6 +33,8 @@ userRoute.post(
   uploadSingle,
   uploadUserAvatarController
 );
+userRoute.put("/update-user", authMiddleware, updatedUserController);
 userRoute.post("/reset-password", resetPasswordController);
+userRoute.get("/refresh-token", authMiddleware, refreshTokenController);
 
 export default userRoute;
