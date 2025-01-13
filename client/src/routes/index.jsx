@@ -4,6 +4,7 @@ import HomePage from "../pages/HomePage";
 import RegisterPage from "../pages/RegisterPage";
 import LoginPage from "../pages/LoginPage";
 import SearchPage from "../pages/SearchPage";
+import VerifyEmailPage from "../pages/VerifyEmailPage";
 
 const router = createBrowserRouter([
     {
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
             {
                 path: "search",
                 element: <SearchPage />,
+            },
+            {
+                path: "verify-email",
+                element: <VerifyEmailPage />
             }
         ],
     },
