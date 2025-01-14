@@ -569,3 +569,32 @@ export const refreshTokenController = async (req, res) => {
     });
   }
 };
+
+export const getUserDetails = async (req, res) => {
+  try {
+    const userId = req.userId;
+
+    const user = await UserModel.findById(userId).select("-password");
+
+    if (!user) {
+      return res.status(400).json({
+        message: "User with this email does not exist",
+        success: false,
+        error: true,
+      });
+    }
+
+    return res.status(200).json({
+      message: "User details fetched successfully",
+      success: true,
+      error: false,
+      data: user,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message || error,
+      success: false,
+      error: true,
+    });
+  }
+};

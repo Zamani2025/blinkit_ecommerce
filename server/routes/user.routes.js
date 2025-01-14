@@ -1,6 +1,7 @@
 import express from "express";
 import {
   forgotPasswordController,
+  getUserDetails,
   loginUserController,
   logoutUserController,
   refreshTokenController,
@@ -36,5 +37,5 @@ userRoute.post(
 userRoute.put("/update-user", authMiddleware, updatedUserController);
 userRoute.post("/reset-password", resetPasswordController);
 userRoute.get("/refresh-token", authMiddleware, refreshTokenController);
-
+userRoute.get("/get-user", authMiddleware, getUserDetails );
 export default userRoute;

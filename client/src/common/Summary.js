@@ -27,6 +27,10 @@ const SummaryApi = {
     url: "api/user/reset-password",
     method: "post",
   },
+  fetch_user: {
+    url: "api/user/get-user",
+    method: "get",
+  },
 };
 
 export default SummaryApi;
