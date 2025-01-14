@@ -6,10 +6,11 @@ const initialState = {
   email: "",
   mobile: "",
   role: "",
+  avatar: "",
   verify_email: false,
   shopping_cart: [],
   address: [],
-  ordersHistory: [],
+  orderHistory: [],
   refresh_token: "",
 };
 
@@ -26,8 +27,12 @@ const userSlice = createSlice({
       state.verify_email = action.payload.verify_email;
       state.shopping_cart = action.payload.shopping_cart;
       state.address = action.payload.address;
-      state.ordersHistory = action.payload.ordersHistory;
+      state.orderHistory = action.payload.ordersHistory;
       state.refresh_token = action.payload.refresh_token;
+      state.avatar = action.payload.avatar;
+    },
+    setAvatar: (state, action) => {
+      state.avatar = action.payload.avatar;
     },
     logout: (state) => {
       state._id = "";
@@ -40,10 +45,17 @@ const userSlice = createSlice({
       state.address = [];
       state.ordersHistory = [];
       state.refresh_token = "";
+      state.avatar = "";
+    },
+    updateUserDetails: (state, action) => {
+      state.name = action.payload.name;
+      state.email = action.payload.email;
+      state.mobile = action.payload.mobile;
     },
   },
 });
 
-export const { getUserDetails, logout } = userSlice.actions;
+export const { getUserDetails, logout, setAvatar, updateUserDetails } =
+  userSlice.actions;
 
 export default userSlice.reducer;

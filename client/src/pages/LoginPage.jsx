@@ -5,12 +5,17 @@ import AxiosToastError from "../config/AxiosToastError";
 import SummaryApi from "../common/Summary";
 import Axios from "../config/axios";
 import { toast } from "react-toastify";
+import { useDispatch } from "react-redux";
+import { getUserDetails } from "../store/userSlice";
+import fetchUserDetails from "../utils/fetchUserDetails";
 
 const LoginPage = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const handleOnChange = (e) => {
     const { name, value } = e.target;
     setData((prev) => {
@@ -33,11 +38,11 @@ const LoginPage = () => {
       }
       if (response.data.success) {
         toast.success(response.data.message);
-        localStorage.setItem("accessToken", response?.data?.data?.accessToken);
-        localStorage.setItem(
-          "refreshToken",
-          response?.data?.data?.refreshToken
-        );
+        localStorage.setItem("accessToken", response?.data?.data.accessToken);
+        localStorage.setItem("refreshToken", response?.data?.data.refreshToken);
+        const userDetails = await fetchUserDetails();
+        dispatch(getUserDetails(userDetails.data));
+        localStorage.setItem("user", JSON.stringify(userDetails.data));
         setData({ email: "", password: "" });
         navigate("/");
       }

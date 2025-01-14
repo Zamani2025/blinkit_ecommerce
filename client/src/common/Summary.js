@@ -31,6 +31,34 @@ const SummaryApi = {
     url: "api/user/get-user",
     method: "get",
   },
+  upload_avatar: {
+    url: "api/user/upload-avatar",
+    method: "post",
+  },
+  update_profile: {
+    url: "api/user/update-user",
+    method: "put",
+  },
+  add_category: {
+    url: "api/category/create-category",
+    method: "post",
+  },
+  get_category: {
+    url: "api/category/get-categories",
+    method: "get",
+  },
+  update_category: {
+    url: "api/category/update-category",
+    method: "put",
+  },
+  delete_category: {
+    url: "api/category/delete-category",
+    method: "delete",
+  },
+  upload_image: {
+    url: "api/file/upload-image",
+    method: "post",
+  },
 };
 
 export default SummaryApi;

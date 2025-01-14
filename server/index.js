@@ -7,12 +7,18 @@ import cookieParser from "cookie-parser";
 import connectDB from "./config/connectDB.js";
 import userRoute from "./routes/user.routes.js";
 import { authMiddleware } from "./middleware/auth.js";
+import categoryRoute from "./routes/category.routes.js";
+import uploadImageRoute from "./routes/uploadImage.routes.js";
 
 dotenv.config();
 
 const app = express();
 
-app.use(express.json());
+app.use(
+  express.json({
+    limit: "50mb",
+  })
+);
 app.use(cookieParser());
 app.use(
   cors({
@@ -33,6 +39,8 @@ app.get("/", authMiddleware, (req, res) => {
   });
 });
 app.use("/api/user", userRoute);
+app.use("/api/category", categoryRoute);
+app.use("/api/file", uploadImageRoute);
 
 const PORT = process.env.PORT || 5000;
 
