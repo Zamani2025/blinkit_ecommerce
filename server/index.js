@@ -9,6 +9,8 @@ import userRoute from "./routes/user.routes.js";
 import { authMiddleware } from "./middleware/auth.js";
 import categoryRoute from "./routes/category.routes.js";
 import uploadImageRoute from "./routes/uploadImage.routes.js";
+import subCategoryRoute from "./routes/subCategory.routes.js";
+import productRoute from "./routes/product.routes.js";
 
 dotenv.config();
 
@@ -41,6 +43,8 @@ app.get("/", authMiddleware, (req, res) => {
 app.use("/api/user", userRoute);
 app.use("/api/category", categoryRoute);
 app.use("/api/file", uploadImageRoute);
+app.use("/api/sub-category", subCategoryRoute);
+app.use("/api/products", productRoute);
 
 const PORT = process.env.PORT || 5000;
 
