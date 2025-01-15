@@ -29,6 +29,14 @@ const SubCategoryPage = () => {
   const [subCategoryId, setSubCategoryId] = useState("");
   const columnHelper = createColumnHelper();
 
+  const user = localStorage.getItem("user");
+
+  useEffect(() => {
+    if (JSON.parse(user)?.role !== "admin") {
+      window.location.href = "/";
+    }
+  }, []);
+
   const column = [
     columnHelper.accessor("name", {
       header: "Name",
@@ -168,9 +176,18 @@ const SubCategoryPage = () => {
         <DisplayTable data={data} column={column} />
       </div>
 
+      {loading && (
+        <div className="flex items-center justify-center mt-4">
+          <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-t-2 border-gray-900"></div>
+        </div>
+      )}
+
       {openSubCategoryModal && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-500 bg-opacity-50 z-50">
-          <AddSubCategoryModal setOpenModal={setOpenSubCategoryModal} />
+          <AddSubCategoryModal
+            fetchSubCategory={fetchSubCategory}
+            setOpenModal={setOpenSubCategoryModal}
+          />
         </div>
       )}
 

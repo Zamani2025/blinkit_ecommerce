@@ -16,6 +16,7 @@ import ProductAdmin from "../pages/ProductAdmin";
 import UploadProductPage from "../pages/UploadProductPage";
 import OrdersPage from "../pages/OrdersPage";
 import AddressPage from "../pages/AddressPage";
+import UserPage from "../pages/UserPage";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <LoginPage />,
+      },
+      {
+        path: "user",
+        element: <UserPage />,
       },
       {
         path: "search",
@@ -60,34 +65,34 @@ const router = createBrowserRouter([
         children: [
           {
             path: "profile",
-            element: <ProfilePage />
+            element: <ProfilePage />,
           },
           {
             path: "category",
-            element: <CategoryPage />
-          }, 
+            element: <CategoryPage />,
+          },
           {
             path: "sub-category",
-            element: <SubCategoryPage />
+            element: <SubCategoryPage />,
           },
           {
             path: "product",
-            element: <ProductAdmin />
+            element: <ProductAdmin />,
           },
           {
             path: "upload-product",
-            element: <UploadProductPage />
+            element: <UploadProductPage />,
           },
           {
             path: "orders",
-            element: <OrdersPage />
+            element: <OrdersPage />,
           },
           {
             path: "address",
-            element: <AddressPage />
-          }
-        ]
-      }
+            element: <AddressPage />,
+          },
+        ],
+      },
     ],
   },
 ]);

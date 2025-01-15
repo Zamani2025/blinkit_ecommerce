@@ -42,34 +42,38 @@ const UserMenu = ({ close }) => {
         <AiOutlineProfile />
       </Link>
       <Divider />
-      <Link
-        to="/dashboard/category"
-        className="px-2 py-1 hover:bg-blue-700 rounded hover:text-white"
-        onClick={close}
-      >
-        Category
-      </Link>
-      <Link
-        to="/dashboard/sub-category"
-        className="px-2 py-1 hover:bg-blue-700 rounded hover:text-white"
-        onClick={close}
-      >
-        Sub Category
-      </Link>
-      <Link
-        to="/dashboard/product"
-        className="px-2 py-1 hover:bg-blue-700 rounded hover:text-white"
-        onClick={close}
-      >
-        Products
-      </Link>
-      <Link
-        to="/dashboard/upload-product"
-        className="px-2 py-1 hover:bg-blue-700 rounded hover:text-white"
-        onClick={close}
-      >
-        Upload Product
-      </Link>
+      {user.role === "admin" && (
+        <>
+          <Link
+            to="/dashboard/category"
+            className="px-2 py-1 hover:bg-blue-700 rounded hover:text-white"
+            onClick={close}
+          >
+            Category
+          </Link>
+          <Link
+            to="/dashboard/sub-category"
+            className="px-2 py-1 hover:bg-blue-700 rounded hover:text-white"
+            onClick={close}
+          >
+            Sub Category
+          </Link>
+          <Link
+            to="/dashboard/product"
+            className="px-2 py-1 hover:bg-blue-700 rounded hover:text-white"
+            onClick={close}
+          >
+            Products
+          </Link>
+          <Link
+            to="/dashboard/upload-product"
+            className="px-2 py-1 hover:bg-blue-700 rounded hover:text-white"
+            onClick={close}
+          >
+            Upload Product
+          </Link>
+        </>
+      )}
       <Link
         to="/dashboard/orders"
         className="px-2 py-1 hover:bg-blue-700 rounded hover:text-white"

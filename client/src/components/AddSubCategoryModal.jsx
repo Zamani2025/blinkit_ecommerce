@@ -3,8 +3,10 @@ import uploadImage from "../utils/uploadImage";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { IoClose } from "react-icons/io5";
+import Axios from "../config/axios";
+import SummaryApi from "../common/Summary";
 
-const AddSubCategoryModal = ({ setOpenModal }) => {
+const AddSubCategoryModal = ({ setOpenModal, fetchSubCategory }) => {
   const [loading, setLoading] = useState(false);
   const [loadImage, setLoadImage] = useState(false);
   const [data, setData] = useState({
@@ -14,7 +16,15 @@ const AddSubCategoryModal = ({ setOpenModal }) => {
   });
   const allCategories = useSelector((state) => state.category.allCategories);
 
-  const handleOnChange = (e) => {};
+  const handleOnChange = (e) => {
+    const { name, value } = e.target;
+    setData((prev) => {
+      return {
+        ...prev,
+        [name]: value,
+      };
+    });
+  };
   const handleUploadImage = async (e) => {
     setLoadImage(true);
     const file = e.target.files[0];
@@ -31,7 +41,28 @@ const AddSubCategoryModal = ({ setOpenModal }) => {
     });
     setLoadImage(false);
   };
-  const handleOnSubmit = async (e) => {};
+  const handleOnSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const response = await Axios({
+        ...SummaryApi.create_subCategory,
+        data: data,
+      });
+      if (response.data.error) {
+        toast.error(response.data.message);
+      }
+      if (response.data.success) {
+        toast.success(response.data.message);
+        fetchSubCategory();
+        setOpenModal(false);
+      }
+    } catch (error) {
+      AxiosToastError(error);
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <div className="bg-white p-4 rounded max-w-md w-full shadow">
       <div className="flex justify-between items-center mb-2">

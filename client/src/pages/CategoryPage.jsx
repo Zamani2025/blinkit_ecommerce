@@ -10,6 +10,13 @@ const CategoryPage = () => {
   const [openCategoryModal, setOpenCategoryModal] = useState(false);
   const [categoryData, setCategoryData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const user = localStorage.getItem("user");
+
+  useEffect(() => {
+    if (JSON.parse(user)?.role !== "admin") {
+      window.location.href = "/";
+    }
+  }, []);
 
   const fetchCategory = async () => {
     setLoading(true);

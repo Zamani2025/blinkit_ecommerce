@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { getUserDetails } from "./store/userSlice";
 import { setAllCategories } from "./store/categorySlice";
 import { setAllSubCategories } from "./store/subCategorySlcie";
+import { setAllProducts } from "./store/productSlice";
 
 function App() {
   const dispatch = useDispatch();
@@ -63,10 +64,27 @@ function App() {
     }
   };
 
+  const fetchProducts = async () => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.get_products,
+      });
+      if (response.data.error) {
+        toast.error(response.data.message);
+      }
+      if (response.data.success) {
+        dispatch(setAllProducts(response?.data?.data));
+      }
+    } catch (error) {
+      AxiosToastError(error);
+    }
+  };
+
   useEffect(() => {
     fetchUserDetails();
     fetchCategory();
     fetchSubCategory();
+    fetchProducts();
     document.title = "Blinkit Ecommerce";
   }, []);
 

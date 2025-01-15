@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Search from "./Search";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FaShoppingBag, FaUserCircle } from "react-icons/fa";
 import useMobile from "../hooks/useMobile";
 import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
@@ -13,6 +13,7 @@ const Header = () => {
   const location = useLocation();
   const [showDropdown, setShowDropdown] = useState(false);
   const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (location.pathname === "/search") {
@@ -21,6 +22,14 @@ const Header = () => {
       setSearchPage(false);
     }
   }, [location.pathname]);
+
+  const handleRedirectToUser = () => {
+    if (user?._id) {
+      navigate("/user");
+    } else {
+      navigate("/login");
+    }
+  };
 
   return (
     <div className="border flex flex-col gap-2 sticky top-0 shadow bg-white h-28 lg:h-20 px-4 z-30">
@@ -35,7 +44,7 @@ const Header = () => {
           <Search />
         </div>
         <div className="flex justify-center items-center">
-          <FaUserCircle size={30} className="block md:hidden" />
+          <FaUserCircle onClick={handleRedirectToUser} size={30} className="block md:hidden" />
           <div
             onClick={() => setShowDropdown(!showDropdown)}
             className="hidden justify-center items-center gap-8 md:flex"
