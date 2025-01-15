@@ -51,25 +51,27 @@ const ProfilePage = () => {
       setLoading(false);
     }
   };
-  
+
   return (
     <div className="container mx-auto px-4 py-4">
-      <div className="rounded-full overflow-hidden w-28 h-28 shadow bg-white flex justify-center items-center">
-        {user.avatar ? (
-          <img
-            src={user.avatar}
-            alt="avatar"
-            className="w-full h-full object-cover"
-          />
-        ) : (
-          <FaUser size={80} className=" text-gray-500" />
-        )}
-      </div>
-      <div
-        onClick={() => setOpenModal(true)}
-        className="w-fit text-sm hover:bg-yellow-400 hover:text-white transition-all duration-300 cursor-pointer rounded border border-yellow-400 px-2 py-1 mt-2"
-      >
-        Upload Avatar
+      <div className="flex flex-col gap-2 items-center lg:items-start justify-center">
+        <div className="rounded-full overflow-hidden w-48 h-48 lg:w-28 lg:h-28 shadow bg-white flex justify-center items-center">
+          {user.avatar ? (
+            <img
+              src={user.avatar}
+              alt="avatar"
+              className="w-full h-full object-cover"
+            />
+          ) : (
+            <FaUser size={80} className=" text-gray-500" />
+          )}
+        </div>
+        <div
+          onClick={() => setOpenModal(true)}
+          className="lg:w-fit w-48 text-center text-sm hover:bg-yellow-400 hover:text-white transition-all duration-300 cursor-pointer rounded border border-yellow-400 px-2 py-1 mt-2"
+        >
+          Upload Avatar
+        </div>
       </div>
       {openModal && (
         <div className="fixed top-0 left-0 w-full h-full px-4 bg-gray-500 bg-opacity-50 flex justify-center items-center">
@@ -89,7 +91,6 @@ const ProfilePage = () => {
             onChange={handleOnChange}
             id="name"
             className="border w-full py-2 px-4 rounded outline-none bg-slate-50 focus-within:border-yellow-400"
-            
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -104,7 +105,6 @@ const ProfilePage = () => {
             value={data.email}
             onChange={handleOnChange}
             className="border w-full py-2 px-4 rounded outline-none bg-slate-50 focus-within:border-yellow-400"
-            
           />
         </div>
         <div className="flex flex-col gap-2">
@@ -119,7 +119,6 @@ const ProfilePage = () => {
             onChange={handleOnChange}
             id="mobile"
             className="border w-full py-2 px-4 rounded outline-none bg-slate-50 focus-within:border-yellow-400"
-            
           />
         </div>
         <button

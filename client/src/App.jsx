@@ -9,6 +9,8 @@ import Axios from "./config/axios";
 import AxiosToastError from "./config/AxiosToastError";
 import { useDispatch } from "react-redux";
 import { getUserDetails } from "./store/userSlice";
+import { setAllCategories } from "./store/categorySlice";
+import { setAllSubCategories } from "./store/subCategorySlcie";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,9 +31,42 @@ function App() {
     }
   };
 
+  const fetchCategory = async () => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.get_category,
+      });
+      if (response.data.error) {
+        toast.error(response.data.message);
+      }
+      if (response.data.success) {
+        dispatch(setAllCategories(response?.data?.data));
+      }
+    } catch (error) {
+      AxiosToastError(error);
+    }
+  };
+
+  const fetchSubCategory = async () => {
+    try {
+      const response = await Axios({
+        ...SummaryApi.get_subCategory,
+      });
+      if (response.data.error) {
+        toast.error(response.data.message);
+      }
+      if (response.data.success) {
+        dispatch(setAllSubCategories(response?.data?.data));
+      }
+    } catch (error) {
+      AxiosToastError(error);
+    }
+  };
+
   useEffect(() => {
     fetchUserDetails();
-    window.scrollTo(0, 0);
+    fetchCategory();
+    fetchSubCategory();
     document.title = "Blinkit Ecommerce";
   }, []);
 

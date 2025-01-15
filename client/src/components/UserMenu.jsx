@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { AiOutlineProfile } from "react-icons/ai";
 import Divider from "./Divider";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Axios from "../config/axios";
 import SummaryApi from "../common/Summary";
 import { toast } from "react-toastify";
@@ -11,6 +11,7 @@ import { logout } from "../store/userSlice";
 const UserMenu = ({ close }) => {
   const user = useSelector((state) => state.user);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
@@ -28,14 +29,14 @@ const UserMenu = ({ close }) => {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         dispatch(logout());
-        window.location.reload();
+        navigate("/");
       }
     } catch (error) {
       AxiosToastError(error);
     }
   };
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 z-50">
       <Link to="/dashboard/profile" className="flex items-center gap-2">
         <p>{user.name || user.mobile}</p>
         <AiOutlineProfile />

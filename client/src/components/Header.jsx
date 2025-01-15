@@ -23,7 +23,7 @@ const Header = () => {
   }, [location.pathname]);
 
   return (
-    <div className="border flex flex-col gap-2 sticky top-0 shadow bg-white h-28 lg:h-20 px-4">
+    <div className="border flex flex-col gap-2 sticky top-0 shadow bg-white h-28 lg:h-20 px-4 z-30">
       <div className="flex justify-between items-center md:h-full container mx-auto">
         <Link
           to={"/"}
@@ -49,7 +49,7 @@ const Header = () => {
                   <GoTriangleDown size={25} />
                 )}
                 {showDropdown && (
-                  <div className="absolute transition-all duration-300  z-10 w-[200px] rounded top-8 right-0 bg-white shadow-md p-2 flex flex-col gap-2">
+                  <div className="absolute w-[200px] rounded top-8 right-0 bg-white shadow-md p-2 flex flex-col gap-2">
                     <UserMenu close={() => setShowDropdown(false)} />
                   </div>
                 )}

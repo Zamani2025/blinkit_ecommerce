@@ -36,7 +36,7 @@ const CategoryPage = () => {
     fetchCategory();
   }, []);
   return (
-    <section className="container mx-auto px-4 py-4">
+    <section className="container mx-auto px-4 py-4 z-0">
       <div className="bg-white px-4 py-2 flex items-center gap-2 justify-between rounded">
         <h1 className="font-bold">Categories</h1>
         <button

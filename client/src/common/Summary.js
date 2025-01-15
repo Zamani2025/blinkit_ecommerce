@@ -59,6 +59,22 @@ const SummaryApi = {
     url: "api/file/upload-image",
     method: "post",
   },
+  create_subCategory: {
+    url: "api/sub-category/create-subcategory",
+    method: "post",
+  },
+  get_subCategory: {
+    url: "api/sub-category/get-subcategories",
+    method: "get",
+  },
+  update_subCategory: {
+    url: "api/sub-category/update-subcategory",
+    method: "put",
+  },
+  delete_subCategory: {
+    url: "api/sub-category/delete-subcategory",
+    method: "delete",
+  },
 };
 
 export default SummaryApi;
